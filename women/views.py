@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from typing import Any
 from django.db.models.query import QuerySet
 from django.http import HttpResponse 
@@ -23,6 +25,7 @@ class WomenHome(DataMixin, ListView):
         return Women.published.all().select_related('cat')
 
 
+@login_required()
 def about(request):
     contact_list = Women.published.all()
     paginator = Paginator(contact_list, 3)
@@ -49,7 +52,8 @@ class ShowPost(DataMixin ,DetailView):
         return get_object_or_404(Women.published, slug=self.kwargs[self.slug_url_kwarg])
 
 
-class AddPage(DataMixin ,CreateView):
+
+class AddPage(LoginRequiredMixin, DataMixin ,CreateView):
     form_class = AddPostForm
     template_name = 'women/addpage.html'
     title_page = 'Post qo\'shish'

@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.template.defaultfilters import slugify
-
+from django.contrib.auth import get_user_model
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -41,6 +41,8 @@ class Women(models.Model):
     )
     tags = models.ManyToManyField("TagPost", blank=True, related_name="tags")
     husband= models.OneToOneField('Husband', on_delete=models.SET_NULL, null=True, blank=True, related_name='woman')
+
+    author = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, default=None, related_name="posts")
 
     objects = models.Manager()
     published = PublishedManager()

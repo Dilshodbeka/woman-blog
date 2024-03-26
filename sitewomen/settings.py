@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "debug_toolbar",
     "women.apps.WomenConfig",
+    "users.apps.UsersConfig",
 ]
 
 MIDDLEWARE = [
@@ -66,6 +67,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "users.context_porcessors.get_women_context",
             ],
         },
     },
@@ -128,3 +130,7 @@ MEDIA_URL = "/meida/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+LOGIN_REDIRECT_URL = "home"
+LOGIN_URL = 'users:login'

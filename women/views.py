@@ -32,7 +32,7 @@ def about(request):
 
 
     return render(request, 'women/about.html',
-                  { 'title': 'Sayt haqida', 'form': form })
+                  { 'title': 'Sayt haqida', 'page_obj': page_obj })
 
 
 

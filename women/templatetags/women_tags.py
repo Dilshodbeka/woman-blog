@@ -3,13 +3,13 @@ from women.models import Category, TagPost
 from django.db.models import Count
 from women.utils import menu
 
+
 register = template.Library()
 
 
 @register.simple_tag
 def get_menu():
     return menu
-
 
 @register.inclusion_tag('women/list_categories.html')
 def show_category(cat_selected=0):

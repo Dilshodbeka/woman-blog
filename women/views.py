@@ -5,6 +5,9 @@ from django.db.models.query import QuerySet
 from django.http import HttpResponse 
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from women.utils import DataMixin
 
@@ -24,8 +27,7 @@ class WomenHome(DataMixin, ListView):
     def get_queryset(self) -> QuerySet[Any]:
         return Women.published.all().select_related('cat')
 
-
-@login_required()
+@login_required
 def about(request):
     contact_list = Women.published.all()
     paginator = Paginator(contact_list, 3)
@@ -52,14 +54,14 @@ class ShowPost(DataMixin ,DetailView):
         return get_object_or_404(Women.published, slug=self.kwargs[self.slug_url_kwarg])
 
 
-
 class AddPage(LoginRequiredMixin, DataMixin ,CreateView):
     form_class = AddPostForm
     template_name = 'women/addpage.html'
     title_page = 'Post qo\'shish'
 
     def form_valid(self, form):
-        form.save()
+        w= form.save(commit=False)
+        w.author = self.request.user
         return super().form_valid(form)
 
 
@@ -89,7 +91,6 @@ class WomenCategory(DataMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cat = context['posts'][0].cat
-        print('*************************', context['posts'][1])
         return self.get_mixin_content(context,
                                       title = 'Kategoriya - ' + cat.name,
                                       cat_selected=cat.pk

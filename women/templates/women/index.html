@@ -5,9 +5,9 @@
 	{% for p in posts %}
 			<li>
 				<div class="article-panel">
-				<p class="first"> Category: {{p.cat.name}}</p>
-				<p class="last"> Date: {{p.time_update|date:"d-m-Y H-i-s"}}</p>
-			    </div>
+					<p class="first"> Category: {{p.cat.name}} | Author: {{p.author.username|default:"_"}} </p>
+					<p class="last"> Date: {{p.time_update|date:"d-m-Y H-i-s"}}</p>
+				</div>
 
 				{% if p.photo %}
 					<p> <img class="img-article-left thumb" src="{{ p.photo.url }}"></p>
@@ -30,27 +30,25 @@
 <nav class="list-pages">
 	<ul>
 		{% if page_obj.has_previous %}
-		<li class="page-num"><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-		{% else %}
-		<li class="page-num-disabled">&laquo;</li>
+		<li class="page-num">
+			<a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+		</li>
 		{% endif %}
-
 		{% for p in paginator.page_range %}
 		{% if page_obj.number == p %}
-		<li class="page-num page-num-selected">{{ p }}</li>
+		<li class="page-num page-num-selected">{{p}}</li>
 		{% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
-        <li class="page-num">
+		<li class="page-num">
 			<a href="?page={{ p }}">{{p}}</a>
 		</li>
 		{% endif %}
-        {% endfor %}
-
+		{% endfor %}
 		{% if page_obj.has_next %}
-		<li class="page-num"><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-		{% else %}
-		<li class="page-num-disabled">&raquo;</li>
+		<li class="page-num">
+			<a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+		</li>
 		{% endif %}
-    </ul>
+	</ul>
 </nav>
 {% endif %}
 {% endblock %}

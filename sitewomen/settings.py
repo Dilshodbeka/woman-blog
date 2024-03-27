@@ -67,7 +67,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "users.context_processors.get_women_context", # get_women_context from context_processors.py
+                "users.context_porcessors.get_women_context",
             ],
         },
     },
@@ -132,6 +132,12 @@ MEDIA_URL = "/meida/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "home"
 LOGIN_URL = 'users:login'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'users.authentication.EmailAuthBackend'
+]
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

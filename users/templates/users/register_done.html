@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Hush kelibsiz</h1>
+
+<p>Siz muvafaqqiyatli registratsiyaga qildingiz! Endi saytga kirish uchun login qiling.</p>
+
+<p>
+<a href="{% url 'users:login' %}">Kirish</a>
+</p>
+
+{% endblock %}
